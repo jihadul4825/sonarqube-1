@@ -1,34 +1,4 @@
-# name: SonarQube Analysis (Minimal)
-
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
-
-
-# jobs:
-#   sonar:
-#     runs-on: ubuntu-latest
-
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v4
-
-#       - name: Run SonarQube Scan
-#         uses: SonarSource/sonarqube-scan-action@v4
-#         env:
-#           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-#         with:
-#           args: >
-#             -Dsonar.projectKey=my-python-project
-#             -Dsonar.sources=.
-#             -Dsonar.sourceEncoding=UTF-8
-
-name: SonarQube Analysis (Django Backend)
+name: SonarQube Analysis (Minimal)
 
 on:
   push:
@@ -38,29 +8,14 @@ on:
     branches:
       - main
 
+
 jobs:
   sonar:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      # Skip requirements.txt
-      - name: Install basic dependencies
-        run: |
-          pip install django
-          pip install coverage
-
-      - name: Run tests with coverage
-        run: |
-          coverage run manage.py test || true
-          coverage xml
 
       - name: Run SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v4
@@ -69,11 +24,6 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
-            -Dsonar.projectKey=my-django-backend
+            -Dsonar.projectKey=my-python-project
             -Dsonar.sources=.
             -Dsonar.sourceEncoding=UTF-8
-            -Dsonar.python.version=3.10
-            -Dsonar.exclusions=**/migrations/**,**/static/**,**/venv/**,**/*.html
-            -Dsonar.tests=.
-            -Dsonar.test.inclusions=**/tests/**,**/test_*.py
-            -Dsonar.coverageReportPaths=coverage.xml
