@@ -1,6 +1,5 @@
 name: SonarQube Analysis (Minimal)
 
-
 on:
   push:
     branches:
@@ -8,9 +7,6 @@ on:
   pull_request:
     branches:
       - main
-
-
-
 
 
 jobs:
